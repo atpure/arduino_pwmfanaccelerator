@@ -49,7 +49,9 @@ void loop() {
   if (cnt%control_interval == 0) {
     if (avr_pwm_value/control_interval <= (1000000 / PWM_FREQ_HZ)) {
       int calcduty = calc_duty(avr_pwm_value/control_interval);
-      if (calcduty - pre_pwm_value >= 5){ // fast up
+      if (calcduty < 25) { // prevent error
+        setPwmDuty(25);
+      } else if (calcduty - pre_pwm_value >= 5){ // fast up
         setPwmDuty(pre_pwm_value + 5);
       } else if (calcduty - pre_pwm_value <= -10) { // slow down
         setPwmDuty(pre_pwm_value - 10);
@@ -80,6 +82,8 @@ byte calc_duty(unsigned int pwm_value) {
 void setPwmDuty(byte duty) {
   if (duty > 60) {
     duty = 60;
+  } else if (duty < 25) {
+    duty = 25;
   }
   Serial.print("PreDuty = "); Serial.print(pre_pwm_value);Serial.print("\tApplyDuty = "); Serial.print(duty);
   Serial.println();
