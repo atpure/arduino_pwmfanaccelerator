@@ -1,4 +1,6 @@
-# pwmfanaccelerator
+# xbox fan accelerator
+
+<img src="./image/image01.jpg"/>
 
 ### Reference
 1. http://www.benripley.com/diy/arduino/three-ways-to-read-a-pwm-signal-with-arduino/
